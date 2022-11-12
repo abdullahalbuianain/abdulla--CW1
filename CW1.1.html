@@ -23,44 +23,65 @@
             </figure> 
             <h3>Subject: {{lessons.subject}}</h3>
             <p>Location: {{lessons.location}}</p>
-            <p>Spaces available: {{lessons.spaces}} {{ spacesAvailable }}</p>
+            <p>Spaces available: {{lessons.spaces}}</p>
             <p>Price: {{lessons.price}}</p>
 
-            <button @click="addToCart" v-if="canAddToCart">Add to Cart</button>
-            <button disabled="disabled" v-else>Add To cart</button>
+            <button @click='addToCart' v-if='canAddToCart'>Add to Cart</button>
+            <button disabled='disabled' v-else>Add To cart</button>
         </div>
+        </div>
+
+        <div v-else="showlessons">
+            <h2>Checkout</h2>
+            <p><strong>Name : </strong></p>
+            <input v-model.trim="order.fristName"/>
+
+            <p><strong>Number : </strong></p>
+            <input v-model.number="order.number" type="number"/>
+
+            <h2>Order Information</h2>
+            <p>First name: {{order.firstName}}</p>
+            <p>Number: {{order.number}}</p>
+
+            <button @click='submitForm' v-if='order.firstName, order.number'>Submit Order</button>
+            <button disabled='disabled' v-else>Please fill Name and Number !</button>
+
+
         </div>
 
     </div>
 
     <script type="text/javascript">
-        new Vue({
+        var webstore = new Vue({
             el: '#app',
             data: {
                 sitename: 'After School Lessons',
-                lessons: lessons,
-                cart: [],
+                lessons: lesson,
                 showlessons: true,
 
                 order: {
                     firstName: '',
                     number: '',
                 },
+                
+                cart: []
             },
        
 
         methods: {
-            addToCart: function (lessons){
-                this.cart.push(this.lessons.id)
+            addToCart: function(lessons){
+                this.cart.push(lessons.id);
             },
 
             showCheckout() {
                     this.showlessons = this.showlessons ? false : true;
-                },
+            },
 
-                canAddToCart(lessons) {
-                    return lessons.spaces > this.cartCount(lessons.id)
-                },
+            canAddToCart() {
+                    return this.lessons.spaces > this.cartCount(lessons.id);
+            },
+
+            
 
         },
         
@@ -70,11 +91,13 @@
             },
 
             spacesAvailable: function(lessons){
-                    return lessons.spaces - this.cartCount;
-                },
+                return lessons.spaces - this.cartCount;
+            },
+
+           
         },
 
-        
+    
      })
     </script>
 </body>
