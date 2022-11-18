@@ -19,10 +19,12 @@
             
             <button disabled='disabled' v-if='this.cart < [0]' class="disabledButton"><span class='fas fa-shopping-cart'></span>Checkout</button>
             <button @click='showCheckout' v-else  class="addButtonStyle">{{this.cart.length}}<span class='fas fa-shopping-cart'></span>Checkout</button>
+            <button @click="">sort</button>
+
 
         </header>
         <div v-if="showlessons" class="lessonGrid">
-        <div v-for="lesson in lessons" :key="lesson.id" >
+        <div v-for="(lesson, index) in lessons" :key="lesson.id" >
             <figure>
                 <p><img v-bind:src="lesson.image"></p>
             </figure> 
@@ -113,9 +115,26 @@
 
             },
 
+            sortedLessons_alphabet(lesson) {
+		        let sortedLesson = this.lesson;
+		
+		            sortedLesson = sortedLesson.sort((a,b) => {
+			            let fa = a.subject.toLowerCase(), fb = b.subject.toLowerCase();
+			            if (fa < fb) {
+				        return -1
+			            }
+
+			            if (fa > fb) {
+				        return 1
+			            }
+
+			            return 0
+	            	})
+            },
+
 
             spacesAvailable(lesson){
-                    return this.lesson.spaces - this.cartCount;
+                    return this.canAddToCart - this.cartCount;
             },
 
 
@@ -125,7 +144,7 @@
 methods: {
 
     canAddToCart(lesson){
-        return this.lesson.spaces > this.cartCount(lesson)
+        return lesson.spaces > this.cartCount(lesson)
     },
 
 
@@ -144,16 +163,19 @@ methods: {
 
     removeFromCart(lesson){
         this.cart.splice(this.cart.lesson, 1);
+            if(this.cart.length <= 0){
+                this.showlessons = true;
+            };
     },
 
-   /* cartCount(lesson) {
+    cartCount2(lesson) {
                     let count = 0;
                     for (let i = 0; i < this.cart.length; i++) {
                         if (this.cart[i] === id) count++;
                     }
                     return count;
 
-    },*/
+    },
 },
 
 
