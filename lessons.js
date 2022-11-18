@@ -58,7 +58,7 @@ let lesson = [
                 subject: "Science",
                 location: "London",
                 price: 100.00,
-                image: "assets/science.jpg",
+                image: "assets/Science.jpg",
                 spaces: 5,
                 
             },
@@ -67,7 +67,7 @@ let lesson = [
                 subject: "Science",
                 location: "York",
                 price: 100.00,
-                image: "assets/science.jpg",
+                image: "assets/Science.jpg",
                 spaces: 5,
                 
             },
