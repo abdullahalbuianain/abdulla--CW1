@@ -5,7 +5,7 @@ let lesson = [
                 location: "London",
                 price: 100.00,
                 image: "assets/math.jpg",
-                spaces: 5,
+                spaces:5,
                 
             },
             {
