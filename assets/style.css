@@ -58,6 +58,7 @@ img {
     border: none;
     color: white;
     padding: 10px 22px;
+    position: relative;
     text-align: center;
     text-decoration: none;
     display: inline-block;

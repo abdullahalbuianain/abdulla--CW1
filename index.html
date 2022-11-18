@@ -15,27 +15,29 @@
     <div id="app">
         <header>
             <h1 v-text='sitename'></h1>
-
             
             <button disabled='disabled' v-if='this.cart < [0]' class="disabledButton"><span class='fas fa-shopping-cart'></span>Checkout</button>
             <button @click='showCheckout' v-else  class="addButtonStyle">{{this.cart.length}}<span class='fas fa-shopping-cart'></span>Checkout</button>
-            <button @click="">sort</button>
+            <button @click="" class="addButtonStyle">sort</button>
 
+       </header>
 
-        </header>
         <div v-if="showlessons" class="lessonGrid">
         <div v-for="(lesson, index) in lessons" :key="lesson.id" >
+            
             <figure>
                 <p><img v-bind:src="lesson.image"></p>
             </figure> 
+
             <div class="lessonAlign">
             <h3>Subject: {{lesson.subject}}</h3>
             <p>Location: {{lesson.location}}</p>
             <p>Spaces available: {{lesson.spaces}}</p>
             <p>Price: {{lesson.price}}</p>
             </div>
-            <button v-on:click='addToCart(lesson)' v-if='canAddToCart' class="addButtonStyle">Add to cart</button>
-            <button disabled='disabled' v-else>Add To cart</button>
+
+            <button v-on:click='addToCart(lesson), canAddToCart' v-if='canAddToCart' class="addButtonStyle">Add to cart</button>
+            <button disabled='disabled' v-else  class="disabledButton">Add To cart</button>
 
             
         </div>
@@ -55,21 +57,24 @@
             <p>Number: {{order.number}}</p>
             </div>
 
-           
+          
             <button @click='submitForm' v-if='order.firstName, order.number' class="checkoutButtonStyle">Submit Order</button>
             <button disabled='disabled' v-else class="disabledButton">Please fill Name and Number !</button>
-
+          
             <div class="lessonGrid">
             <div v-for="lesson in cart">
+
                 <figure>
                     <p><img v-bind:src="lesson.image"></p>
                 </figure> 
+
                 <div class="lessonAlign">
                 <h3>Subject: {{lesson.subject}}</h3>
                 <p>Location: {{lesson.location}}</p>
                 <p>Spaces available: {{lesson.spaces}}</p>
                 <p>Price: {{lesson.price}}</p>
                 </div>
+
                 <button v-on:click="removeFromCart" class="addButtonStyle">Remove from cart</button>
                 
             </div>
@@ -103,6 +108,12 @@
                 return this.cart.length ||'';
             },
 
+            /*
+            canAddToCart(lesson){
+                return this.lesson > this.cartCount
+                
+             },*/
+
             sortedLessons() {
                 function compare(a,b) {
                      if (a.price > b.price) return 1;
@@ -118,8 +129,8 @@
             sortedLessons_alphabet(lesson) {
 		        let sortedLesson = this.lesson;
 		
-		            sortedLesson = sortedLesson.sort((a,b) => {
-			            let fa = a.subject.toLowerCase(), fb = b.subject.toLowerCase();
+		            sortedLesson ((a,b) => {
+			            let fa = a.lesson.toLowerCase(), fb = b.lesson.toLowerCase();
 			            if (fa < fb) {
 				        return -1
 			            }
@@ -133,55 +144,55 @@
             },
 
 
-            spacesAvailable(lesson){
-                    return this.canAddToCart - this.cartCount;
+            spacesAvailable(){
+                    return this.lesson.spaces - this.cartCount
+                    //return console.log
             }, 
 
 
 },
 
         
-methods: {
+        methods: {
+            canAddToCart(lesson){
+                return this.lesson.spaces > this.cartCount
+                
+            },
 
-    canAddToCart(lesson){
-        return lesson.spaces > this.cartCount(lesson)
-    },
-
-
-    addToCart(lesson){
-        this.cart.push(lesson);
+            addToCart(lesson){
+                 this.cart.push(lesson);
        
-    },
+            },
 
-    showCheckout() {
-            this.showlessons = this.showlessons ? false : true;
-    },
+            showCheckout() {
+                this.showlessons = this.showlessons ? false : true;
+            },
 
-    submitForm() {
-        alert('Order submitted')
-    },
+            submitForm() {
+                alert('Order submitted')
+             },
 
-    removeFromCart(lesson){
-        this.cart.splice(this.cart.lesson, 1);
-            if(this.cart.length <= 0){
-                this.showlessons = true;
-            };
-    },
+            removeFromCart(lesson){
+                 this.cart.splice(this.cart.lesson, 1);
+                     if(this.cart.length <= 0){
+                     this.showlessons = true;
+                    };
+            },
 
-    cartCount2(lesson) {
-                    let count = 0;
+            cartCount2(lesson) {
+                let count = 0;
                     for (let i = 0; i < this.cart.length; i++) {
                         if (this.cart[i] === id) count++;
                     }
                     return count;
 
-    },
+            },
 },
 
 
 
-    })
+})
 
-    </script>
+</script>
 </body>
 </html>
